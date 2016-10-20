@@ -88,11 +88,11 @@ public class MainActivity extends AppCompatActivity {
     public void onClickDot(View v) {
         Button btn = (Button) v;
         // Проверка условия запрета на добавление ".", если экран пуст или если в числе их больше одной.
-        if (!display.isEmpty()
-                && ((!display.contains(".") && currentOperator.isEmpty())
-                || (!currentOperator.isEmpty()
-                && display.split(Pattern.quote(currentOperator)).length > 1
-                && !display.split(Pattern.quote(currentOperator))[1].contains(".")))) {
+        if (!display.isEmpty() && 
+                ((!display.contains(".") && currentOperator.isEmpty()) || 
+                       (!currentOperator.isEmpty()
+                       && display.split(Pattern.quote(currentOperator)).length > 1
+                       && !display.split(Pattern.quote(currentOperator))[1].contains(".")))) {
             display += btn.getText();
             updateScreen();
         }
@@ -154,14 +154,10 @@ public class MainActivity extends AppCompatActivity {
 
     private BigDecimal calculate(String a, String b, String op) {
         switch (op) {
-            case "+":
-                return new BigDecimal(a).add(new BigDecimal(b));
-            case "-":
-                return new BigDecimal(a).subtract(new BigDecimal(b));
-            case "×":
-                return new BigDecimal(a).multiply(new BigDecimal(b));
-            case "%":
-                return new BigDecimal(a).multiply(new BigDecimal(b)).divide(new BigDecimal("100"), 4, BigDecimal.ROUND_HALF_UP);
+            case "+": return new BigDecimal(a).add(new BigDecimal(b));
+            case "-": return new BigDecimal(a).subtract(new BigDecimal(b));
+            case "×": return new BigDecimal(a).multiply(new BigDecimal(b));
+            case "%": return new BigDecimal(a).multiply(new BigDecimal(b)).divide(new BigDecimal("100"), 4, BigDecimal.ROUND_HALF_UP);
             case "÷":
                 try {
                     return new BigDecimal(a).divide(new BigDecimal(b), 4, BigDecimal.ROUND_HALF_UP);
@@ -169,8 +165,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Попытка деления на ноль: " + a + " / 0", e.getMessage());
                     error += "Infinity";
                 }
-            default:
-                return new BigDecimal("0");
+            default: return new BigDecimal("0");
         }
     }
 
