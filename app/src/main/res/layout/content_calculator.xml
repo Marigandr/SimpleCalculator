@@ -30,7 +30,8 @@
         android:background="@android:color/background_light"
         android:gravity="bottom|right"
         android:textSize="50sp"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:allowUndo="false" />
 
     <Button
         android:text="7"
@@ -202,9 +203,9 @@
         android:layout_toRightOf="@+id/btn6"
         android:layout_alignRight="@+id/btnMinus"
         android:layout_alignEnd="@+id/btnMinus"
-        android:layout_height="50dp"
         android:layout_width="80dp"
-        android:onClick="onClickOperator" />
+        android:onClick="onClickOperator"
+        android:layout_height="43dp" />
 
     <Button
         android:text="-"
@@ -215,9 +216,9 @@
         android:layout_below="@+id/btnPlus"
         android:layout_toRightOf="@+id/btn6"
         android:layout_toEndOf="@+id/btn6"
-        android:layout_height="50dp"
         android:layout_width="80dp"
-        android:onClick="onClickOperator" />
+        android:onClick="onClickOperator"
+        android:layout_height="43dp" />
 
     <Button
         android:text="×"
@@ -225,12 +226,12 @@
         android:textColor="@android:color/background_light"
         android:textSize="40sp"
         android:background="#4d4d4d"
-        android:layout_height="50dp"
         android:layout_width="80dp"
         android:layout_below="@+id/btnMinus"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="onClickOperator" />
+        android:onClick="onClickOperator"
+        android:layout_height="43dp" />
 
     <Button
         android:text="÷"
@@ -238,25 +239,12 @@
         android:textColor="@android:color/background_light"
         android:textSize="40sp"
         android:background="#4d4d4d"
-        android:layout_height="50dp"
         android:layout_width="80dp"
         android:layout_below="@+id/btnMult"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="onClickOperator" />
-
-    <Button
-        android:text="%"
-        android:id="@+id/btnPerc"
-        android:textColor="@android:color/background_light"
-        android:textSize="40sp"
-        android:background="#4d4d4d"
-        android:layout_height="50dp"
-        android:layout_width="80dp"
-        android:layout_below="@+id/btnDiv"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onClickOperator" />
+        android:onClick="onClickOperator"
+        android:layout_height="43dp" />
 
     <Button
         android:text="="
@@ -265,11 +253,37 @@
         android:textSize="40sp"
         android:background="#4d4d4d"
         android:layout_width="80dp"
+        android:onClick="onClickEqual"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/btnPerc"
-        android:layout_height="40dp"
-        android:onClick="onClickEqual" />
+        android:layout_height="43dp"
+        android:layout_below="@+id/btnPerc" />
+
+    <Button
+        android:text="%"
+        android:id="@+id/btnSign"
+        android:textColor="@android:color/background_light"
+        android:textSize="36sp"
+        android:background="#4d4d4d"
+        android:layout_width="80dp"
+        android:layout_below="@+id/btnDiv"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="onClickOperator"
+        android:layout_height="43dp" />
+
+    <Button
+        android:text="+/-"
+        android:id="@+id/btnPerc"
+        android:textColor="@android:color/background_light"
+        android:textSize="36sp"
+        android:background="#4d4d4d"
+        android:layout_width="80dp"
+        android:layout_height="43dp"
+        android:layout_below="@+id/btnSign"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="onClickSignChanger" />
 
 </RelativeLayout>
