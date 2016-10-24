@@ -270,7 +270,7 @@
         android:layout_below="@+id/btnDiv"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="onClickOperator"
+        android:onClick="onClickPercent"
         android:layout_height="43dp" />
 
     <Button

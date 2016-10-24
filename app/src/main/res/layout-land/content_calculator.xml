@@ -253,7 +253,7 @@
         android:textColor="@android:color/background_light"
         android:textSize="40sp"
         android:background="#4d4d4d"
-        android:onClick="onClickOperator"
+        android:onClick="onClickPercent"
         android:layout_alignBottom="@+id/btnMult"
         android:layout_toRightOf="@+id/btnMult"
         android:layout_toEndOf="@+id/btnMult"
