@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         updateScreen();
     }
 
-    // Действия для кнопок "+", "-", "×", "÷", "%".
+    // Действия для кнопок "+", "-", "×", "÷".
     public void onClickOperator(View v) {
         Button btn = (Button) v;
         if (display.isEmpty()) return;
@@ -88,24 +88,60 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickDot(View v) {
         Button btn = (Button) v;
-        // Проверка условия запрета на добавление ".", если экран пуст или если в числе их больше одной.
-        if (!display.isEmpty()
-                && ((!display.contains(".") && currentOperator.isEmpty())
+        // Проверка условия запрета на добавление ".", если в числе их больше одной.
+        if ((!display.contains(".") && currentOperator.isEmpty())
                 || (!currentOperator.isEmpty()
                 && display.split(Pattern.quote(currentOperator)).length > 1
-                && !display.split(Pattern.quote(currentOperator))[1].contains(".")))) {
+                && !display.split(Pattern.quote(currentOperator))[1].contains("."))) {
             display += btn.getText();
             updateScreen();
         }
     }
 
-    public void onClickSignChanger (View v) {
+    public void onClickSignChanger(View v) {
         if (!result.isEmpty()) {
+            String _display = result;
             clear();
-            updateScreen();
+            display = _display;
         }
         display = currentOperator.isEmpty() ? changeSignOfFirstNum() : changeSignOfSecondNum();
         updateScreen();
+    }
+
+    public void onClickPercent(View v) {
+        if (display.isEmpty() || !getResult()) return;
+        if (!error.isEmpty()) {
+            screen.setText(error);
+            clear();
+        } else if (getResult()) {
+            String tempDisplay = display.charAt(0) + display.substring(1, display.length()).replace(currentOperator, "!");
+            String[] argums = tempDisplay.split("!");
+            BigDecimal a = new BigDecimal(argums[0]);
+            BigDecimal b = new BigDecimal(argums[1]);
+            BigDecimal percent = a.multiply(b).divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP);
+            switch (currentOperator) {
+                case "+":
+                    result = (a.add(percent)).toString();
+                    break;
+                case "-":
+                    result = (a.subtract(percent)).toString();
+                    break;
+                case "×":
+                    result = percent.toString();
+                    break;
+                case "÷":
+                    try {
+                        result = (a.divide(percent, 2, BigDecimal.ROUND_HALF_UP).multiply(a)).toString();
+                        break;
+                    } catch (ArithmeticException e) {
+                        Log.d("Попытка деления на ноль: " + a + " / 0", e.getMessage());
+                        error += "Infinity";
+                    }
+            }
+            result = chooseResultFormat(new BigDecimal(result));
+            display = result;
+            updateScreen();
+        }
     }
 
 
@@ -131,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
             case '+':
             case '×':
             case '÷':
-            case '%':
                 return true;
             default:
                 return false;
@@ -148,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         } else {
             BigDecimal tempResult = calculate(argums[0], argums[1], currentOperator);
-            result = resultFormat(tempResult);
+            result = chooseResultFormat(tempResult);
             return true;
         }
     }
@@ -161,8 +196,6 @@ public class MainActivity extends AppCompatActivity {
                 return new BigDecimal(a).subtract(new BigDecimal(b));
             case "×":
                 return new BigDecimal(a).multiply(new BigDecimal(b));
-            case "%":
-                return new BigDecimal(a).multiply(new BigDecimal(b)).divide(new BigDecimal("100"), 4, BigDecimal.ROUND_HALF_UP);
             case "÷":
                 try {
                     return new BigDecimal(a).divide(new BigDecimal(b), 4, BigDecimal.ROUND_HALF_UP);
@@ -176,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Определение формата вывода результата вычислений
-    private String resultFormat(BigDecimal res) {
+    private String chooseResultFormat(BigDecimal res) {
         double resToDouble = res.doubleValue();
         if (String.valueOf(resToDouble).length() < 10) {
             if (Math.abs(resToDouble) > Math.abs((int) resToDouble)) {
